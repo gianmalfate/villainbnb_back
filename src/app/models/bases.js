@@ -18,11 +18,12 @@ const BaseSchema = new mongoose.Schema({
     city: {
         type: String,
         require: true,
+        enum: ['Nova York', 'Rio de Janeiro', 'Tóquio'] // cidades possiveis/aceitas
     },
     techs: {
         type: [String], // array de strings
         require: true,
-        enum: ['laboratório de nanotecnologia', 'jardim de ervas venenosas', 'estande de tiro', 'academia de parkour'] // strings possiveis/aceitas
+        enum: ['laboratório de nanotecnologia', 'jardim de ervas venenosas', 'estande de tiro', 'academia de parkour'] // tecnologias possiveis/aceitas
     },
     user: { // user "criador" da base
         type: mongoose.Schema.Types.ObjectId,
