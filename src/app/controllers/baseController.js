@@ -2,6 +2,8 @@
 
 // importacoes
 const express = require('express');
+const url = require('url'); // manipulacao da url
+const querystring = require('querystring'); // manipulacao da query
 const authMiddleware = require('../middlewares/auth'); // autenticacao
 
 const Base = require('../models/bases'); // import do base schema
@@ -21,6 +23,14 @@ router.post('/', async(req, res) => {
         // erro title repetido
         if(await Base.findOne({ title }))
             return res.status(400).send({ error: 'Base title already exists' });
+
+        // erro facadeName repetido
+        if(await Base.findOne({ facadeName }))
+            return res.status(400).send({ error: 'Base facadeName already exists' });
+
+        // erro title e facadeName iguais
+        if(await title === facadeName)
+            return res.status(400).send({ error: 'Base title and facadeName can not be the same' });
 
         const base = await Base.create({ title, facadeName, city, techs, user: req.userId }); // cria nova base
 
@@ -63,7 +73,40 @@ router.get('/', async(req, res) => {
     }
 });
 
-//consultar(get)
+// consultar - title (get)
+router.get('/title', async(req, res) => {
+    try {
+        const bases = await Base.find({ title: req.query.title }).populate('user'); // busca base(s) pelo seu titulo
+
+        return res.send({ bases }); // retorna bases
+    } catch(err) {
+        return res.status(400).send({ error: 'Error searching base with this title' }); // erro default
+    }
+});
+
+// consultar - city (get)
+router.get('/city', async(req, res) => {
+    try {
+        const bases = await Base.find({ city: req.query.city }).populate('user'); // busca base(s) pela sua cidade
+
+        return res.send({ bases }); // retorna bases
+    } catch(err) {
+        return res.status(400).send({ error: 'Error searching base with this city' }); // erro default
+    }
+});
+
+// consultar - techs (get)
+router.get('/techs', async(req, res) => {
+    try {
+        const bases = await Base.find({ techs: req.query.techs }).populate('user'); // busca base(s) pelas suas techs
+
+        return res.send({ bases }); // retorna bases
+    } catch(err) {
+        return res.status(400).send({ error: 'Error searching base with this(ese) tech(s)' }); // erro default
+    }
+});
+
+//consultar - id (get)
 router.get('/:baseId', async(req, res) => {
     try {
         const base = await Base.findById(req.params.baseId).populate('user'); // busca base pelo seu id e o user que a criou
@@ -79,7 +122,7 @@ router.delete('/:baseId', async(req, res) => {
     try {
         await Base.findByIdAndRemove(req.params.baseId); // remove base pelo seu id
 
-        return res.send(); // retorno
+        return res.status(200).send({ message: 'Base deleted' }); // retorno
     } catch(err) {
         return res.status(400).send({ error: 'Error deleting base' }); // erro default
     }

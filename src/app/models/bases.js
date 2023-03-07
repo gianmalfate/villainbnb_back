@@ -20,10 +20,11 @@ const BaseSchema = new mongoose.Schema({
         require: true,
     },
     techs: {
-        type: String,
+        type: [String], // array de strings
         require: true,
+        enum: ['laboratório de nanotecnologia', 'jardim de ervas venenosas', 'estande de tiro', 'academia de parkour'] // strings possiveis/aceitas
     },
-    user: {
+    user: { // user "criador" da base
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         require: true,

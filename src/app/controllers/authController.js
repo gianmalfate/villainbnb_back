@@ -2,8 +2,8 @@
 
 // importacoes
 const express = require('express');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs'); // incripta
+const jwt = require('jsonwebtoken'); // token
 
 const authConfig = require('../../config/auth.json') // autenticacao
 
@@ -15,12 +15,12 @@ const router = express.Router(); // rota
 // funcao que gera o token do usuario
 function generateToken(params = {}) {
     return jwt.sign(params, authConfig.secret, {
-        expiresIn: 86400, // vence em um dia
+        expiresIn: 86400, // expira em um dia
     });
 }
 
 
-// acoes
+// ações
 
 // registrar(post)
 router.post('/register', async(req, res) => {
