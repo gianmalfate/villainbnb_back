@@ -47,6 +47,19 @@ router.put('/:baseId', async(req, res) => {
     const { title, facadeName, city, techs } = req.body; // recebe parametros
 
     try {
+
+        // erro title repetido
+        if(await Base.findOne({ title }))
+            return res.status(400).send({ error: 'Base title already exists' });
+
+        // erro facadeName repetido
+        if(await Base.findOne({ facadeName }))
+            return res.status(400).send({ error: 'Base facadeName already exists' });
+
+        // erro title e facadeName iguais
+        if(await title === facadeName)
+            return res.status(400).send({ error: 'Base title and facadeName can not be the same' });
+
         const base = await Base.findByIdAndUpdate(req.params.baseId, { // atualiza informacoes da base buscad pelo id
             title,
             facadeName,
