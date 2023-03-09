@@ -12,7 +12,7 @@ do arquivo “ErrorHandler.ts”, padronizando os erros em todo o projeto.
 PS:. Inclusive os retornos de sucesso status (200s) poderiam ser padronizados e apenas importados nos arquivos posteriormente também.
 
 
-- Problema: No arquivo “plataform.route.ts” da pasta routes, o parâmetro “next” é passado nas funções, mas não é utilizado (seu valor nunca é lido).
+- Problema: No arquivo “plataform.route.ts” da pasta “routes”, o parâmetro “next” é passado nas funções, mas não é utilizado (seu valor nunca é lido).
 
 - Solução: Eliminar os parâmetros “next” não usados nas funções para gerar um código mais limpo e menos confuso.
 
@@ -26,10 +26,6 @@ PS:. Inclusive os retornos de sucesso status (200s) poderiam ser padronizados e 
 
 
 
-*Escalabilidade*
-
-
-
 *Organização de arquivos e pastas*
 
 - Problema: A disposição dos arquivos e pastas do projeto não se encontra de uma forma bem organizada e intuitiva.
@@ -39,6 +35,7 @@ aplicação (logs; mongo {_ mocks _, Mongo.ts, MongoEvent.ts}; prometheus e rout
 utils (com apenas fields.ts, success.ts, validator.ts) e os arquivos app.ts e index.tx.
 
 ![Screenshot (57)](https://user-images.githubusercontent.com/90017824/224119038-fcc0c9a6-0724-4f47-91f7-9ea718a68834.png)
+
 
 - Problema: A disposição das informações no arquivo “plataform.route.ts” se encontra um pouco despadronizada.
 
@@ -74,10 +71,3 @@ serão “errors”.
      res.status(200).send(SUCCESS.OPERATIONS.DELETE_DIA)
      res.status(200).send(SUCCESS.OPERATIONS.	QUERY_EVENT)”
 para manter o controle e segurança das ações para funcionarem da forma correta e esperada.
-
-
-
-*Outros*
-
-
-
